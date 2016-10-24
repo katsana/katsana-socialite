@@ -15,8 +15,9 @@
         }
     },
     "require": {
+        "php": ">=5.5",
         "illuminate/support": "^5.1",
-        "laravel/socialite": "~2.0"
+        "socialiteproviders/manager": "~2.1"
     },
     "require-dev": {},
     "minimum-stability": "dev",
