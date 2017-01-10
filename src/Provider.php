@@ -13,7 +13,32 @@ class Provider extends AbstractProvider implements ProviderInterface
      */
     const IDENTIFIER = 'KATSANA';
 
-    protected $scopes = ['view.profile'];
+    /**
+     * List of scopes.
+     *
+     * @var array
+     */
+    protected $scopes = ['*'];
+
+    /**
+     * Endpoint.
+     *
+     * @var string
+     */
+    protected static $endpoints = [
+        'api' => 'https://api.katsana.com',
+        'oauth' => 'https://my.katsana.com/oauth',
+    ];
+
+    /**
+     * Set API endpoints.
+     *
+     * @param array $endpoint
+     */
+    public static function setEndpoint(array $endpoint)
+    {
+        static::$endpoints = array_merge(static::$endpoints, $endpoints);
+    }
 
     /**
      * {@inheritdoc}
@@ -21,7 +46,7 @@ class Provider extends AbstractProvider implements ProviderInterface
     protected function getAuthUrl($state)
     {
         return $this->buildAuthUrlFromBase(
-            'https://api.katsana.com/oauth/authorize', $state
+            static::$oauthEndpoint.'/authorize', $state
         );
     }
 
@@ -30,7 +55,7 @@ class Provider extends AbstractProvider implements ProviderInterface
      */
     protected function getTokenUrl()
     {
-        return 'https://api.katsana.com/oauth/token';
+        return static::$oauthEndpoint.'/token';
     }
     /**
      * {@inheritdoc}
@@ -38,7 +63,7 @@ class Provider extends AbstractProvider implements ProviderInterface
     protected function getUserByToken($token)
     {
         $response = $this->getHttpClient()->get(
-            'https://api.katsana.com/profile', [
+            static::$apiEndpoint.'/profile', [
             'headers' => [
                 'Accept' => 'application/vnd.KATSANA.v1+json',
                 'Authorization' => "Bearer {$token}",
@@ -54,8 +79,8 @@ class Provider extends AbstractProvider implements ProviderInterface
     protected function mapUserToObject(array $user)
     {
         return (new User())->setRaw($user)->map([
-            'id' => $user['data']['id'],
-            'name' => $user['data']['fullname'],
+            'id' => $user['id'],
+            'name' => $user['fullname'],
         ]);
     }
 
