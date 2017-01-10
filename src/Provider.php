@@ -2,9 +2,10 @@
 
 namespace Katsana\Socialite;
 
+use Illuminate\Support\Arr;
+use SocialiteProviders\Manager\OAuth2\User;
 use Laravel\Socialite\Two\ProviderInterface;
 use SocialiteProviders\Manager\OAuth2\AbstractProvider;
-use SocialiteProviders\Manager\OAuth2\User;
 
 class Provider extends AbstractProvider implements ProviderInterface
 {
@@ -81,6 +82,8 @@ class Provider extends AbstractProvider implements ProviderInterface
         return (new User())->setRaw($user)->map([
             'id' => $user['id'],
             'name' => $user['fullname'],
+            'email' => $user['email'],
+            'avatar' => Arr::get($user, 'avatar.url'),
         ]);
     }
 
