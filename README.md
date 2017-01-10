@@ -43,7 +43,7 @@ Also, add the `Socialite` facade to the `aliases` array in your app configuratio
 'Socialite' => Laravel\Socialite\Facades\Socialite::class,
 ```
 
-You will also need to add credentials for the OAuth services your application utilizes. These credentials should be placed in your config/services.php configuration file. For example:
+You will also need to add credentials for the OAuth services your application utilizes. These credentials should be placed in your `config/services.php` configuration file. For example:
 
 ```php
 'katsana' => [
