@@ -46,7 +46,7 @@ class Provider extends AbstractProvider implements ProviderInterface
     protected function getAuthUrl($state)
     {
         return $this->buildAuthUrlFromBase(
-            static::$oauthEndpoint.'/authorize', $state
+            static::$endpoints['oauth'].'/authorize', $state
         );
     }
 
@@ -55,7 +55,7 @@ class Provider extends AbstractProvider implements ProviderInterface
      */
     protected function getTokenUrl()
     {
-        return static::$oauthEndpoint.'/token';
+        return static::$endpoints['oauth'].'/token';
     }
     /**
      * {@inheritdoc}
@@ -63,7 +63,7 @@ class Provider extends AbstractProvider implements ProviderInterface
     protected function getUserByToken($token)
     {
         $response = $this->getHttpClient()->get(
-            static::$apiEndpoint.'/profile', [
+            static::$endpoints['api'].'/profile', [
             'headers' => [
                 'Accept' => 'application/vnd.KATSANA.v1+json',
                 'Authorization' => "Bearer {$token}",
