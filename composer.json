@@ -16,7 +16,9 @@
     },
     "require": {
         "php": ">=5.5",
+        "illuminate/container": "^5.1",
         "illuminate/support": "^5.1",
+        "katsana/katsana-sdk-laravel": "~0.1",
         "socialiteproviders/manager": "~2.1"
     },
     "require-dev": {
@@ -26,7 +28,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "0.1-dev"
+            "dev-master": "0.2-dev"
         }
     },
     "config": {

@@ -22,49 +22,92 @@ class Provider extends AbstractProvider implements ProviderInterface
     protected $scopes = ['*'];
 
     /**
+     * Environment setting.
+     *
+     * @var string|null
+     */
+    protected static $environment;
+
+    /**
      * Endpoint.
      *
      * @var string
      */
     protected static $endpoints = [
-        'api' => 'https://api.katsana.com',
-        'oauth' => 'https://my.katsana.com/oauth',
+        'production' => [
+            'api' => 'https://api.katsana.com',
+            'oauth' => 'https://my.katsana.com/oauth',
+        ],
+        'carbon' => [
+            'api' => 'https://carbon.api.katsana.com',
+            'oauth' => 'https://carbon.katsana.com/oauth',
+        ],
     ];
 
     /**
-     * Set API endpoints.
+     * Set API environment.
      *
-     * @param array $endpoints
+     * @param string|null $environment
      */
-    public static function setEndpoint(array $endpoints)
+    public static function setEnvironment($environment = null)
     {
-        static::$endpoints = array_merge(static::$endpoints, $endpoints);
+        static::$environment = $environment;
     }
 
     /**
-     * {@inheritdoc}
+     * Get environment endpoint.
+     *
+     * @return array
+     */
+    protected function getEnvironmentEndpoint()
+    {
+        $environment = static::$environment;
+
+        if (is_null($environment)) {
+            $environment = $this->getConfig('environment', 'production');
+        }
+
+        return static::$endpoints[$environment];
+    }
+
+
+    /**
+     * Get the authentication URL for the provider.
+     *
+     * @param  string  $state
+     *
+     * @return string
      */
     protected function getAuthUrl($state)
     {
         return $this->buildAuthUrlFromBase(
-            static::$endpoints['oauth'].'/authorize', $state
+            $this->getEnvironmentEndpoint()['oauth'].'/authorize', $state
         );
     }
 
     /**
-     * {@inheritdoc}
+     * Get the token URL for the provider.
+     *
+     * @return string
      */
     protected function getTokenUrl()
     {
-        return static::$endpoints['oauth'].'/token';
+        return $this->getEnvironmentEndpoint()['oauth'].'/token';
     }
+
     /**
-     * {@inheritdoc}
+     * Get the raw user for the given access token.
+     *
+     * @param  string  $token
+     *
+     * @return array
      */
     protected function getUserByToken($token)
     {
+        $client = $this->getSdkClient();
+
         $response = $this->getHttpClient()->get(
-            static::$endpoints['api'].'/profile', [
+            $this->getEnvironmentEndpoint()['api'].'/profile', [
             'headers' => [
                 'Accept' => 'application/vnd.KATSANA.v1+json',
                 'Authorization' => "Bearer {$token}",
@@ -75,7 +118,10 @@ class Provider extends AbstractProvider implements ProviderInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Map the raw user array to a Socialite User instance.
+     *
+     * @param  array  $user
+     * @return \Laravel\Socialite\Two\User
      */
     protected function mapUserToObject(array $user)
     {
@@ -88,12 +134,31 @@ class Provider extends AbstractProvider implements ProviderInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Get the POST fields for the token request.
+     *
+     * @param  string  $code
+     * @return array
      */
     protected function getTokenFields($code)
     {
         return array_merge(parent::getTokenFields($code), [
             'grant_type' => 'authorization_code',
         ]);
+    }
+
+    /**
+     * Get KATSANA SDK Client.
+     *
+     * @return \Katsana\Sdk\Client
+     */
+    protected function getSdkClient()
+    {
+        $app = Container::getInstance();
+
+        if ($app->bound('katsana')) {
+            return $app->make('katsana');
+        }
+
+        return Client::make($this->clientId, $this->clientSecret);
     }
 }
