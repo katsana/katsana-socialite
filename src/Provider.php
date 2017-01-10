@@ -33,9 +33,9 @@ class Provider extends AbstractProvider implements ProviderInterface
     /**
      * Set API endpoints.
      *
-     * @param array $endpoint
+     * @param array $endpoints
      */
-    public static function setEndpoint(array $endpoint)
+    public static function setEndpoint(array $endpoints)
     {
         static::$endpoints = array_merge(static::$endpoints, $endpoints);
     }
