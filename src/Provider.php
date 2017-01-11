@@ -63,9 +63,7 @@ class Provider extends AbstractProvider implements ProviderInterface
      */
     protected function getEnvironmentEndpoint($group = null)
     {
-        $environment = static::$environment;
-
-        if (is_null($environment)) {
+        if (is_null($environment = static::$environment)) {
             $environment = $this->getConfig('environment', 'production');
         }
 
@@ -145,6 +143,16 @@ class Provider extends AbstractProvider implements ProviderInterface
         return array_merge(parent::getTokenFields($code), [
             'grant_type' => 'authorization_code',
         ]);
+    }
+
+    /**
+     * Additional config keys.
+     *
+     * @return array
+     */
+    public static function additionalConfigKeys()
+    {
+        return ['environment'];
     }
 
     /**
