@@ -104,17 +104,11 @@ class Provider extends AbstractProvider implements ProviderInterface
      */
     protected function getUserByToken($token)
     {
-        $client = $this->getSdkClient();
-
-        $response = $this->getHttpClient()->get(
-            $this->getEnvironmentEndpoint()['api'].'/profile', [
-            'headers' => [
-                'Accept' => 'application/vnd.KATSANA.v1+json',
-                'Authorization' => "Bearer {$token}",
-            ],
-        ]);
-
-        return json_decode($response->getBody()->getContents(), true);
+        return $this->getSdkClient()
+                    ->setAccessToken($token)
+                    ->resource('Profile')
+                    ->show()
+                    ->toArray();
     }
 
     /**
