@@ -56,6 +56,20 @@ class Provider extends AbstractProvider implements ProviderInterface
     }
 
     /**
+     * Get current environment.
+     *
+     * @return string
+     */
+    protected function getEnvironment()
+    {
+        if (is_null($environment = static::$environment)) {
+            $environment = $this->getConfig('environment', 'production');
+        }
+
+        return $environment;
+    }
+
+    /**
      * Get environment endpoint.
      *
      * @param  string|null  $group
@@ -64,9 +78,7 @@ class Provider extends AbstractProvider implements ProviderInterface
      */
     protected function getEnvironmentEndpoint($group = null)
     {
-        if (is_null($environment = static::$environment)) {
-            $environment = $this->getConfig('environment', 'production');
-        }
+        $environment = $this->getEnvironment();
 
         if (is_null($group) || empty($group)) {
             return static::$endpoints[$environment];
