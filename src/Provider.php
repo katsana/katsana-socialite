@@ -3,6 +3,7 @@
 namespace Katsana\Socialite;
 
 use Illuminate\Support\Arr;
+use Illuminate\Container\Container;
 use SocialiteProviders\Manager\OAuth2\User;
 use Laravel\Socialite\Two\ProviderInterface;
 use SocialiteProviders\Manager\OAuth2\AbstractProvider;
