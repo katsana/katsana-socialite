@@ -57,9 +57,11 @@ class Provider extends AbstractProvider implements ProviderInterface
     /**
      * Get environment endpoint.
      *
+     * @param  string|null  $group
+     *
      * @return array
      */
-    protected function getEnvironmentEndpoint()
+    protected function getEnvironmentEndpoint($group = null)
     {
         $environment = static::$environment;
 
@@ -67,7 +69,11 @@ class Provider extends AbstractProvider implements ProviderInterface
             $environment = $this->getConfig('environment', 'production');
         }
 
-        return static::$endpoints[$environment];
+        if (is_null($group) || empty($group)) {
+            return static::$endpoints[$environment];
+        }
+
+        return Arr::get(static::$endpoints, "{$environment}.{$group}");
     }
 
 
@@ -81,7 +87,7 @@ class Provider extends AbstractProvider implements ProviderInterface
     protected function getAuthUrl($state)
     {
         return $this->buildAuthUrlFromBase(
-            $this->getEnvironmentEndpoint()['oauth'].'/authorize', $state
+            $this->getEnvironmentEndpoint('oauth').'/authorize', $state
         );
     }
 
@@ -92,7 +98,7 @@ class Provider extends AbstractProvider implements ProviderInterface
      */
     protected function getTokenUrl()
     {
-        return $this->getEnvironmentEndpoint()['oauth'].'/token';
+        return $this->getEnvironmentEndpoint('oauth').'/token';
     }
 
     /**
@@ -105,6 +111,7 @@ class Provider extends AbstractProvider implements ProviderInterface
     protected function getUserByToken($token)
     {
         return $this->getSdkClient()
+                    ->useCustomApiEndpoint($this->getEnvironmentEndpoint('api'))
                     ->setAccessToken($token)
                     ->resource('Profile')
                     ->show()
