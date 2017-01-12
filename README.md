@@ -17,7 +17,7 @@ To install through composer, simply put the following in your `composer.json` fi
 ```json
 {
     "require": {
-        "katsana/socialite": "~0.1"
+        "katsana/socialite": "~0.2"
     }
 }
 ```
@@ -31,6 +31,7 @@ KATSANA Socialite is built using [SocialiteProviders](http://socialiteproviders.
 ```php
 'providers' => [
     // Other service providers...
+    Katsana\ServiceProvider::class,
     Laravel\Socialite\SocialiteServiceProvider::class,
     SocialiteProviders\Manager\ServiceProvider::class,
 ],
@@ -39,6 +40,7 @@ KATSANA Socialite is built using [SocialiteProviders](http://socialiteproviders.
 Also, add the `Socialite` facade to the `aliases` array in your app configuration file:
 
 ```php
+'Katsana' => Katsana\Katsana::class,
 'Socialite' => Laravel\Socialite\Facades\Socialite::class,
 ```
 
@@ -46,6 +48,7 @@ You will also need to add credentials for the OAuth services your application ut
 
 ```php
 'katsana' => [
+    'environment' => 'production',
     'client_id' => 'your-katsana-client-id',
     'client_secret' => 'your-katsana-client-secret',
     'redirect' => 'http://your-callback-url',
