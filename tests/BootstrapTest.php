@@ -3,8 +3,11 @@
 use Katsana\Socialite\Bootstrap;
 use SocialiteProviders\Manager\SocialiteWasCalled;
 
-class BootstrapTest extends PHPUnit_Framework_TestCase
+class BootstrapTest extends PHPUnit\Framework\TestCase
 {
+    /**
+     * Teardown the test environment.
+     */
     protected function tearDown()
     {
         Mockery::close();
