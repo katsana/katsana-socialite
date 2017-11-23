@@ -30,10 +30,12 @@ KATSANA Socialite is built using [SocialiteProviders](http://socialiteproviders.
 
 ```php
 'providers' => [
+    
     // Other service providers...
     Katsana\ServiceProvider::class,
     Laravel\Socialite\SocialiteServiceProvider::class,
     SocialiteProviders\Manager\ServiceProvider::class,
+
 ],
 ```
 
