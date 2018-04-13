@@ -8,7 +8,7 @@ class BootstrapTest extends PHPUnit\Framework\TestCase
     /**
      * Teardown the test environment.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         Mockery::close();
     }

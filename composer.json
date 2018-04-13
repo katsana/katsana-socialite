@@ -15,20 +15,20 @@
         }
     },
     "require": {
-        "php": ">=5.5",
-        "illuminate/container": "^5.1",
-        "illuminate/support": "^5.1",
-        "katsana/katsana-sdk-laravel": "~0.1",
-        "socialiteproviders/manager": "~2.1"
+        "php": ">=7.1",
+        "illuminate/container": "^5.5",
+        "illuminate/support": "^5.5",
+        "katsana/katsana-sdk-laravel": "^1.0",
+        "socialiteproviders/manager": "^3.3"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "~1.11",
-        "mockery/mockery": "^0.9.4 || ~1.0",
-        "phpunit/phpunit": "~5.7 || ~6.0"
+        "friendsofphp/php-cs-fixer": "~2.9",
+        "mockery/mockery": "^1.0",
+        "phpunit/phpunit": "^7.0"
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "0.2-dev"
+            "dev-master": "1.0-dev"
         }
     },
     "config": {
