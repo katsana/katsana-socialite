@@ -2,11 +2,11 @@
 
 namespace Katsana\Socialite;
 
-use Illuminate\Support\Arr;
 use Illuminate\Container\Container;
-use SocialiteProviders\Manager\OAuth2\User;
+use Illuminate\Support\Arr;
 use Laravel\Socialite\Two\ProviderInterface;
 use SocialiteProviders\Manager\OAuth2\AbstractProvider;
+use SocialiteProviders\Manager\OAuth2\User;
 
 class Provider extends AbstractProvider implements ProviderInterface
 {
@@ -72,7 +72,7 @@ class Provider extends AbstractProvider implements ProviderInterface
     /**
      * Get environment endpoint.
      *
-     * @param  string|null  $group
+     * @param string|null $group
      *
      * @return array
      */
@@ -87,11 +87,10 @@ class Provider extends AbstractProvider implements ProviderInterface
         return Arr::get(static::$endpoints, "{$environment}.{$group}");
     }
 
-
     /**
      * Get the authentication URL for the provider.
      *
-     * @param  string  $state
+     * @param string $state
      *
      * @return string
      */
@@ -115,7 +114,7 @@ class Provider extends AbstractProvider implements ProviderInterface
     /**
      * Get the raw user for the given access token.
      *
-     * @param  string  $token
+     * @param string $token
      *
      * @return array
      */
@@ -132,7 +131,8 @@ class Provider extends AbstractProvider implements ProviderInterface
     /**
      * Map the raw user array to a Socialite User instance.
      *
-     * @param  array  $user
+     * @param array $user
+     *
      * @return \Laravel\Socialite\Two\User
      */
     protected function mapUserToObject(array $user)
@@ -148,7 +148,8 @@ class Provider extends AbstractProvider implements ProviderInterface
     /**
      * Get the POST fields for the token request.
      *
-     * @param  string  $code
+     * @param string $code
+     *
      * @return array
      */
     protected function getTokenFields($code)

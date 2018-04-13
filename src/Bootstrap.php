@@ -9,7 +9,7 @@ class Bootstrap
     /**
      * Register the socialite provider.
      *
-     * @param  \SocialiteProviders\Manager\SocialiteWasCalled  $event
+     * @param \SocialiteProviders\Manager\SocialiteWasCalled $event
      *
      * @return void
      */
