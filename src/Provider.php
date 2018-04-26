@@ -3,7 +3,6 @@
 namespace Katsana\Socialite;
 
 use Illuminate\Container\Container;
-use Illuminate\Support\Arr;
 use Laravel\Socialite\Two\ProviderInterface;
 use SocialiteProviders\Manager\OAuth2\AbstractProvider;
 use SocialiteProviders\Manager\OAuth2\User;
@@ -141,7 +140,7 @@ class Provider extends AbstractProvider implements ProviderInterface
             'id' => $user['id'],
             'name' => $user['fullname'],
             'email' => $user['email'],
-            'avatar' =>$user['avatar']['url'] ?? null,
+            'avatar' => $user['avatar']['url'] ?? null,
         ]);
     }
 
