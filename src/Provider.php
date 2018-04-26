@@ -50,7 +50,7 @@ class Provider extends AbstractProvider implements ProviderInterface
      *
      * @param string|null $environment
      */
-    public static function setEnvironment($environment = null)
+    public static function setEnvironment(?string $environment = null)
     {
         static::$environment = $environment;
     }
@@ -60,7 +60,7 @@ class Provider extends AbstractProvider implements ProviderInterface
      *
      * @return string
      */
-    protected function getEnvironment()
+    protected function getEnvironment(): string
     {
         if (is_null($environment = static::$environment)) {
             $environment = $this->getConfig('environment', 'production');
@@ -74,9 +74,9 @@ class Provider extends AbstractProvider implements ProviderInterface
      *
      * @param string|null $group
      *
-     * @return array
+     * @return string|null
      */
-    protected function getEnvironmentEndpoint($group = null)
+    protected function getEnvironmentEndpoint(?string $group = null): ?string
     {
         $environment = $this->getEnvironment();
 
@@ -84,7 +84,7 @@ class Provider extends AbstractProvider implements ProviderInterface
             return static::$endpoints[$environment];
         }
 
-        return Arr::get(static::$endpoints, "{$environment}.{$group}");
+        return static::$endpoints[$environment][$group] ?? null;
     }
 
     /**
@@ -174,7 +174,7 @@ class Provider extends AbstractProvider implements ProviderInterface
      *
      * @return \Katsana\Sdk\Client
      */
-    protected function getSdkClient()
+    protected function getSdkClient(): Client
     {
         $app = Container::getInstance();
 
