@@ -123,8 +123,8 @@ class Provider extends AbstractProvider implements ProviderInterface
         return $this->getSdkClient()
                     ->useCustomApiEndpoint($this->getEnvironmentEndpoint('api'))
                     ->setAccessToken($token)
-                    ->resource('Profile')
-                    ->show()
+                    ->uses('Profile')
+                    ->get()
                     ->toArray();
     }
 
@@ -141,7 +141,7 @@ class Provider extends AbstractProvider implements ProviderInterface
             'id' => $user['id'],
             'name' => $user['fullname'],
             'email' => $user['email'],
-            'avatar' => Arr::get($user, 'avatar.url'),
+            'avatar' =>$user['avatar']['url'] ?? null,
         ]);
     }
 
