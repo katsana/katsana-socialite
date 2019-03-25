@@ -18,7 +18,7 @@
         "php": ">=7.1",
         "illuminate/container": "^5.8",
         "illuminate/support": "^5.8",
-        "katsana/katsana-sdk-laravel": "^1.0",
+        "katsana/katsana-sdk-laravel": "^1.1",
         "socialiteproviders/manager": "^3.3"
     },
     "require-dev": {
