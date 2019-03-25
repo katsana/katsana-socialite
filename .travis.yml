@@ -9,31 +9,43 @@ php:
 
 env:
   global:
+    - setup=basic
     - coverage=no
   matrix:
-    - setup=basic
-    - setup=lowest
-    - setup=stable
+    - laravel=5.5.*
+    - laravel=5.6.*
+    - laravel=5.7.*
+    - laravel=5.8.*
+    - setup=lowest laravel=5.5.*
+    - setup=lowest laravel=5.6.*
+    - setup=lowest laravel=5.7.*
+    - setup=lowest laravel=5.8.*
+    - setup=stable laravel=5.5.*
+    - setup=stable laravel=5.6.*
+    - setup=stable laravel=5.7.*
+    - setup=stable laravel=5.8.*
 
-before_script:
+before_install:
   - travis_retry composer self-update
   - composer config discard-changes true
-  - if [[ $setup = 'basic' ]]; then travis_retry composer install --prefer-source --no-interaction; fi
-  - if [[ $setup = 'stable' ]]; then travis_retry composer update --prefer-source --no-interaction --prefer-stable; fi
-  - if [[ $setup = 'lowest' ]]; then travis_retry composer update --prefer-source --no-interaction --prefer-lowest --prefer-stable; fi
-  - if [[ $setup = 'coveralls' ]]; then travis_retry composer require "psr/log=1.0.0" "satooshi/php-coveralls=~0.7" --prefer-source --no-interaction; fi
+
+before_script:
+  - composer require "laravel/framework=${laravel}" --prefer-dist --no-interaction --no-suggest
+  - if [[ $setup = 'stable' ]]; then travis_retry composer update --prefer-dist --no-interaction --no-suggest --prefer-stable; fi
+  - if [[ $setup = 'lowest' ]]; then travis_retry composer update --prefer-dist --no-interaction --no-suggest --prefer-lowest --prefer-stable; fi
+  - if [[ $setup = 'coveralls' ]]; then travis_retry composer require "php-coveralls/php-coveralls=^2.1" --prefer-dist --no-interaction --no-suggest --dev; fi
 
 script:
-  - if [[ $coverage = 'yes' ]]; then ./vendor/bin/phpunit -c phpunit.xml --coverage-clover build/logs/clover.xml; fi
-  - if [[ $coverage = 'no' ]]; then ./vendor/bin/phpunit -c phpunit.xml; fi
+  - if [[ $coverage = 'yes' ]]; then vendor/bin/phpunit -c phpunit.xml --coverage-clover build/logs/clover.xml; fi
+  - if [[ $coverage = 'no' ]]; then vendor/bin/phpunit -c phpunit.xml; fi
 
 after_script:
-  - if [[ $setup = 'coveralls' ]]; then php vendor/bin/coveralls -v; fi
+  - if [[ $setup = 'coveralls' ]]; then php vendor/bin/php-coveralls -v; fi
 
 matrix:
   include:
     - php: 7.1
-      env: setup=coveralls coverage=yes
+      env: setup=coveralls coverage=yes laravel=5.5.*
   allow_failures:
-    - env: setup=coveralls coverage=yes
+    - env: setup=coveralls coverage=yes laravel=5.5.*
   fast_finish: true
