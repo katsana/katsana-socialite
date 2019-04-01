@@ -3,6 +3,7 @@
 namespace Katsana\Socialite;
 
 use Illuminate\Container\Container;
+use Katsana\Sdk\Client;
 use Laravel\Socialite\Two\ProviderInterface;
 use SocialiteProviders\Manager\OAuth2\AbstractProvider;
 use SocialiteProviders\Manager\OAuth2\User;
@@ -61,7 +62,7 @@ class Provider extends AbstractProvider implements ProviderInterface
      */
     protected function getEnvironment(): string
     {
-        if (is_null($environment = static::$environment)) {
+        if (\is_null($environment = static::$environment)) {
             $environment = $this->getConfig('environment', 'production');
         }
 
@@ -79,7 +80,7 @@ class Provider extends AbstractProvider implements ProviderInterface
     {
         $environment = $this->getEnvironment();
 
-        if (is_null($group) || empty($group)) {
+        if (\is_null($group) || empty($group)) {
             return static::$endpoints[$environment];
         }
 
@@ -153,7 +154,7 @@ class Provider extends AbstractProvider implements ProviderInterface
      */
     protected function getTokenFields($code)
     {
-        return array_merge(parent::getTokenFields($code), [
+        return \array_merge(parent::getTokenFields($code), [
             'grant_type' => 'authorization_code',
         ]);
     }
