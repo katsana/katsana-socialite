@@ -121,8 +121,8 @@ return Socialite::driver('katsana')
 Of course, you will need to define routes to your controller methods:
 
 ```php
-Route::get('auth', 'Auth\AuthController@redirectToProvider');
-Route::get('auth/callback', 'Auth\AuthController@handleProviderCallback');
+Route::get('passport', 'Auth\PassportController@redirectToProvider');
+Route::get('passport/callback', 'Auth\PassportController@handleProviderCallback');
 ```
 
 A number of OAuth providers support optional parameters in the redirect request. To include any optional parameters in the request, call the `with` method with an associative array:
