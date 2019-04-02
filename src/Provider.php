@@ -6,7 +6,6 @@ use Illuminate\Container\Container;
 use Katsana\Sdk\Client;
 use Laravel\Socialite\Two\ProviderInterface;
 use SocialiteProviders\Manager\OAuth2\AbstractProvider;
-use SocialiteProviders\Manager\OAuth2\User;
 
 class Provider extends AbstractProvider implements ProviderInterface
 {
@@ -120,7 +119,7 @@ class Provider extends AbstractProvider implements ProviderInterface
      */
     protected function getUserByToken($token)
     {
-        return $this->getSdkClient()
+        return $this->sdkClient()
                     ->useCustomApiEndpoint($this->getEnvironmentEndpoint('api'))
                     ->setAccessToken($token)
                     ->uses('Profile')
@@ -133,11 +132,11 @@ class Provider extends AbstractProvider implements ProviderInterface
      *
      * @param array $user
      *
-     * @return \Laravel\Socialite\Two\User
+     * @return \Katsana\Socialite\Passport
      */
     protected function mapUserToObject(array $user)
     {
-        return (new User())->setRaw($user)->map([
+        return (new Passport())->setRaw($user)->map([
             'id' => $user['id'],
             'name' => $user['fullname'],
             'email' => $user['email'],
@@ -174,7 +173,7 @@ class Provider extends AbstractProvider implements ProviderInterface
      *
      * @return \Katsana\Sdk\Client
      */
-    protected function getSdkClient(): Client
+    protected function sdkClient(): Client
     {
         $app = Container::getInstance();
 

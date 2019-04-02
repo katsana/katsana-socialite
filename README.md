@@ -83,9 +83,9 @@ Next, you are ready to authenticate users! You will need two routes: one for red
 
 namespace App\Http\Controllers\Auth;
 
-use Socialite;
+use Laravel\Socialite\Facades\Socialite;
 
-class AuthController extends Controller
+class PassportController extends Controller
 {
     /**
      * Redirect the user to the KATSANA authentication page.
@@ -104,9 +104,9 @@ class AuthController extends Controller
      */
     public function handleProviderCallback()
     {
-        $user = Socialite::driver('katsana')->user();
+        $passport = Socialite::driver('katsana')->user();
 
-        // $user->token;
+        // $passport->token;
     }
 }
 ```
@@ -121,8 +121,8 @@ return Socialite::driver('katsana')
 Of course, you will need to define routes to your controller methods:
 
 ```php
-Route::get('auth', 'Auth\AuthController@redirectToProvider');
-Route::get('auth/callback', 'Auth\AuthController@handleProviderCallback');
+Route::get('passport', 'Auth\PassportController@redirectToProvider');
+Route::get('passport/callback', 'Auth\PassportController@handleProviderCallback');
 ```
 
 A number of OAuth providers support optional parameters in the redirect request. To include any optional parameters in the request, call the `with` method with an associative array:
@@ -148,22 +148,19 @@ return Socialite::driver('katsana')->stateless()->user();
 Once you have a user instance, you can grab a few more details about the user:
 
 ```php
-$user = Socialite::driver('katsana')->user();
+$passport = Socialite::driver('katsana')->user();
 
 // OAuth Two Providers
-$token = $user->token;
-$refreshToken = $user->refreshToken; // not always provided
-$expiresIn = $user->expiresIn;
+$token = $passport->token;
+$refreshToken = $passport->refreshToken; // not always provided
+$expiresIn = $passport->expiresIn;
 
-// OAuth One Providers
-$token = $user->token;
-$tokenSecret = $user->tokenSecret;
-
-// All Providers
-$user->getId();
-$user->getName();
-$user->getEmail();
-$user->getAvatar();
+// Helper methods.
+$passport->getId();
+$passport->getName();
+$passport->getEmail();
+$passport->getAvatar();
+$passport->getRaw();
 ```
 
 #### Retrieving User Details From Token
@@ -171,5 +168,5 @@ $user->getAvatar();
 If you already have a valid access token for a user, you can retrieve their details using the `userFromToken` method:
 
 ```php
-$user = Socialite::driver('katsana')->userFromToken($token);
+$passport = Socialite::driver('katsana')->userFromToken($token);
 ```
