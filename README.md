@@ -104,9 +104,9 @@ class AuthController extends Controller
      */
     public function handleProviderCallback()
     {
-        $user = Socialite::driver('katsana')->user();
+        $passport = Socialite::driver('katsana')->user();
 
-        // $user->token;
+        // $passport->token;
     }
 }
 ```
@@ -148,22 +148,19 @@ return Socialite::driver('katsana')->stateless()->user();
 Once you have a user instance, you can grab a few more details about the user:
 
 ```php
-$user = Socialite::driver('katsana')->user();
+$passport = Socialite::driver('katsana')->user();
 
 // OAuth Two Providers
-$token = $user->token;
-$refreshToken = $user->refreshToken; // not always provided
-$expiresIn = $user->expiresIn;
+$token = $passport->token;
+$refreshToken = $passport->refreshToken; // not always provided
+$expiresIn = $passport->expiresIn;
 
-// OAuth One Providers
-$token = $user->token;
-$tokenSecret = $user->tokenSecret;
-
-// All Providers
-$user->getId();
-$user->getName();
-$user->getEmail();
-$user->getAvatar();
+// Helper methods.
+$passport->getId();
+$passport->getName();
+$passport->getEmail();
+$passport->getAvatar();
+$passport->getRaw();
 ```
 
 #### Retrieving User Details From Token
@@ -171,5 +168,5 @@ $user->getAvatar();
 If you already have a valid access token for a user, you can retrieve their details using the `userFromToken` method:
 
 ```php
-$user = Socialite::driver('katsana')->userFromToken($token);
+$passport = Socialite::driver('katsana')->userFromToken($token);
 ```
