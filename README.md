@@ -83,9 +83,9 @@ Next, you are ready to authenticate users! You will need two routes: one for red
 
 namespace App\Http\Controllers\Auth;
 
-use Socialite;
+use Laravel\Socialite\Facades\Socialite;
 
-class AuthController extends Controller
+class PassportController extends Controller
 {
     /**
      * Redirect the user to the KATSANA authentication page.

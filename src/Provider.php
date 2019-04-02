@@ -119,7 +119,7 @@ class Provider extends AbstractProvider implements ProviderInterface
      */
     protected function getUserByToken($token)
     {
-        return $this->getSdkClient()
+        return $this->sdkClient()
                     ->useCustomApiEndpoint($this->getEnvironmentEndpoint('api'))
                     ->setAccessToken($token)
                     ->uses('Profile')
@@ -173,7 +173,7 @@ class Provider extends AbstractProvider implements ProviderInterface
      *
      * @return \Katsana\Sdk\Client
      */
-    protected function getSdkClient(): Client
+    protected function sdkClient(): Client
     {
         $app = Container::getInstance();
 
