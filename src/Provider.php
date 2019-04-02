@@ -133,11 +133,11 @@ class Provider extends AbstractProvider implements ProviderInterface
      *
      * @param array $user
      *
-     * @return \Laravel\Socialite\Two\User
+     * @return \Katsana\Socialite\Passport
      */
     protected function mapUserToObject(array $user)
     {
-        return (new User())->setRaw($user)->map([
+        return (new Passport())->setRaw($user)->map([
             'id' => $user['id'],
             'name' => $user['fullname'],
             'email' => $user['email'],
