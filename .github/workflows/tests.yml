@@ -37,7 +37,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update --ignore-platform-req=ext-fileinfo
-          composer update --prefer-dist --no-interaction --no-suggest
+          composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update --ignore-platform-reqs
+          composer update --prefer-dist --no-interaction --no-suggest --ignore-platform-reqs
       - name: Execute tests
         run: vendor/bin/phpunit
