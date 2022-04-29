@@ -15,11 +15,11 @@
         }
     },
     "require": {
-        "php": ">=7.1",
-        "illuminate/container": "^5.8 || ^6.0 || ^7.0 || ^8.0",
-        "illuminate/support": "^5.8 || ^6.0 || ^7.0 || ^8.0",
+        "php": "^7.3 || ^8.0",
+        "illuminate/container": "^6.0 || ^7.0 || ^8.0",
+        "illuminate/support": "^6.0 || ^7.0 || ^8.0",
         "katsana/katsana-sdk-laravel": "^1.1",
-        "socialiteproviders/manager": "^3.3"
+        "socialiteproviders/manager": "^4.1.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.15",

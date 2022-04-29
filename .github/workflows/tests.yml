@@ -12,8 +12,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: [7.4, 7.3, 7.2]
-        laravel: [5.8.x, 6.x, 7.x]
+        php: [8.0, 7.4, 7.3]
+        laravel: [6.x, 7.x, 8.x]
         os: [ubuntu-latest, windows-latest]
 
     name: PHP${{ matrix.php }} with Laravel ${{ matrix.laravel }} on ${{ matrix.os }}
@@ -37,7 +37,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
-          composer update --prefer-dist --no-interaction --no-suggest
+          composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update --ignore-platform-reqs
+          composer update --prefer-dist --no-interaction --no-suggest --ignore-platform-reqs
       - name: Execute tests
         run: vendor/bin/phpunit
