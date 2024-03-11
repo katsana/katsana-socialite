@@ -83,7 +83,7 @@ class Provider extends AbstractProvider implements ProviderInterface
             return static::$endpoints[$environment];
         }
 
-        return static::$endpoints[$environment][$group] ?? null;
+        return data_get($this->getConfig('endpoints'), $group) ?? static::$endpoints[$environment][$group] ?? null;
     }
 
     /**
@@ -96,7 +96,8 @@ class Provider extends AbstractProvider implements ProviderInterface
     protected function getAuthUrl($state)
     {
         return $this->buildAuthUrlFromBase(
-            $this->getEnvironmentEndpoint('oauth').'/authorize', $state
+            $this->getEnvironmentEndpoint('oauth').'/authorize',
+            $state
         );
     }
 
@@ -165,7 +166,7 @@ class Provider extends AbstractProvider implements ProviderInterface
      */
     public static function additionalConfigKeys()
     {
-        return ['environment'];
+        return ['environment','endpoints'];
     }
 
     /**
