@@ -4,6 +4,7 @@ namespace Katsana\Socialite;
 
 use Illuminate\Container\Container;
 use Katsana\Sdk\Client;
+use Katsana\Sdk\Query;
 use Laravel\Socialite\Two\ProviderInterface;
 use SocialiteProviders\Manager\OAuth2\AbstractProvider;
 
@@ -120,11 +121,13 @@ class Provider extends AbstractProvider implements ProviderInterface
      */
     protected function getUserByToken($token)
     {
+        $includes= $this->getConfig('includes')?Query::includes($this->getConfig('includes')):null;
+
         return $this->sdkClient()
                     ->useCustomApiEndpoint($this->getEnvironmentEndpoint('api'))
                     ->setAccessToken($token)
                     ->uses('Profile')
-                    ->get()
+                    ->get($includes)
                     ->toArray();
     }
 
@@ -166,7 +169,7 @@ class Provider extends AbstractProvider implements ProviderInterface
      */
     public static function additionalConfigKeys()
     {
-        return ['environment','endpoints'];
+        return ['environment','endpoints','includes'];
     }
 
     /**

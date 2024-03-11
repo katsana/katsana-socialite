@@ -1,5 +1,4 @@
-KATSANA Socialite Provider
-==============
+# KATSANA Socialite Provider
 
 [![Build Status](https://travis-ci.org/katsana/katsana-socialite.svg?branch=1.0)](https://travis-ci.org/katsana/katsana-socialite)
 [![Latest Stable Version](https://poser.pugx.org/katsana/socialite/v/stable)](https://packagist.org/packages/katsana/socialite)
@@ -7,9 +6,7 @@ KATSANA Socialite Provider
 [![Latest Unstable Version](https://poser.pugx.org/katsana/socialite/v/unstable)](https://packagist.org/packages/katsana/socialite)
 [![License](https://poser.pugx.org/katsana/socialite/license)](https://packagist.org/packages/katsana/socialite)
 
-
-* [Installation](#installation)
-
+- [Installation](#installation)
 
 ## Installation
 
@@ -17,9 +14,9 @@ To install through composer, simply put the following in your `composer.json` fi
 
 ```json
 {
-    "require": {
-        "katsana/socialite": "^1.0"
-    }
+  "require": {
+    "katsana/socialite": "^1.0"
+  }
 }
 ```
 
@@ -31,7 +28,7 @@ KATSANA Socialite is built using [SocialiteProviders](http://socialiteproviders.
 
 ```php
 'providers' => [
-    
+
     // Other service providers...
     Katsana\ServiceProvider::class,
     Laravel\Socialite\SocialiteServiceProvider::class,
@@ -60,6 +57,7 @@ You will also need to add credentials for the OAuth services your application ut
         'api' => 'http://katsana-api-endpoint',
         'oauth' => 'http://katsana-outh-endpoint',
     ],
+    'includes'=>'extra_profile_data',
 ],
 ```
 
@@ -146,7 +144,6 @@ The `stateless` method may be used to disable session state verification. This i
 ```php
 return Socialite::driver('katsana')->stateless()->user();
 ```
-
 
 #### Retrieving User Details
 
