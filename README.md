@@ -55,6 +55,11 @@ You will also need to add credentials for the OAuth services your application ut
     'client_id' => 'your-katsana-client-id',
     'client_secret' => 'your-katsana-client-secret',
     'redirect' => 'http://your-callback-url',
+    //Optional
+    'endpoints'=>[
+        'api' => 'http://katsana-api-endpoint',
+        'oauth' => 'http://katsana-outh-endpoint',
+    ],
 ],
 ```
 
